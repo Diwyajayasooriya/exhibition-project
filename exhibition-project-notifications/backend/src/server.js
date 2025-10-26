@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
 const pool = require('./config/db'); // Import the connection pool
+const { scheduleNotifications } = require('./services/notificationScheduler');
 
 // Import routes
 const authRoutes = require('./routes/auth');
@@ -58,4 +59,7 @@ app.listen(PORT, () => {
       console.log('Successfully connected to PostgreSQL:', res.rows[0].now);
     }
   });
+  
+  // Start the notification scheduler
+  scheduleNotifications();
 });
